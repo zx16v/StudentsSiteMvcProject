@@ -10,6 +10,7 @@ namespace ShimiTest
         {
             bundles.Add(new ScriptBundle("~/bundles/mybundle").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-1.12.0.js",
                          "~/Scripts/jquery.validate*",
                           "~/Scripts/modernizr-*",
                            "~/Scripts/bootstrap.js",
@@ -18,14 +19,21 @@ namespace ShimiTest
                            "~/Scripts/students.js"
                         ));
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                   "~/Content/bootstrap.css",
+                   "~/Content/jquery-ui.css",
+                "~/Content/bootstrap.css",
                     "~/Content/site.css",
                     "~/Content/bootstrap-theme.css"
                     ));
 
-            //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-            //            "~/Scripts/jquery.validate*"));
+           
+            bundles.Add(new ScriptBundle("~/bundles/EditBundle").Include(
+                       "~/Scripts/jquery-{version}.js",
+                       "~/Scripts/students.js"
+                ));
 
+            
+
+  
             //// Use the development version of Modernizr to develop with and learn from. Then, when you're
             //// ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

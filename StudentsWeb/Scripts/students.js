@@ -41,3 +41,37 @@ function getSetPage(Dirceton) {
     return true;
 }
 
+$(document).ready(function () {
+    $("#CitesNames").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Home/GetCities",
+                type: "POST",
+            dataType: "json",
+            cache: false,
+            data: { term: request.term },
+            success: function (data) {
+                response($.map(data, function (item) {
+                    return { label: item.CityName, value: item.CityName, id:item.Id };
+                }))
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("error handler!");
+            }
+        })
+},
+    messages: {
+    noResults: "", results: ""
+},
+
+select: function (event, ui) {
+    // Set autocomplete element to display the label
+    this.value = ui.item.label;
+    // Store value in hidden field
+    $("#CityId_hidden").val(ui.item.id);
+    $("#CityIdhidden").val(ui.item.id);
+    return false;
+}
+});
+
+})
