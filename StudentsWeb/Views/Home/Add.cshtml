@@ -1,0 +1,67 @@
+﻿@model  ShimiTest.ViewModelStudentAndCities
+
+@{ Layout = null;}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    @Scripts.Render("~/bundles/mybundle")
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div style="margin-left:20px;margin-top:50px; width:300px">
+        @Html.ActionLink("Back to grid", "Index", null, new { @class = "btn btn-primary" })
+        <br /><br />
+        @using (Html.BeginForm("Add", "Home", FormMethod.Post))
+        {
+             @Html.ValidationSummary(true)
+             <div class="form-group">
+                @Html.LabelFor(m => m.Israeli_ID_)
+                <br />
+                @Html.TextBoxFor(m => m.Israeli_ID_, new { @class = "form-control" })
+                 @Html.ValidationMessageFor(m=>m.Israeli_ID_)
+                   <br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.First_name_)
+                <br />
+                @Html.TextBoxFor(m => m.First_name_, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.First_name_)
+                <br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Last_name_)
+                <br />
+                @Html.TextBoxFor(m => m.Last_name_, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.Last_name_)
+                <br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description_)
+                <br />
+                @Html.TextBoxFor(m => m.Description_, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.Description_)
+                <br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Date_of_birth)
+                <br />
+                @Html.TextBoxFor(m => m.Date_of_birth, new { @class = "form-control", type = "date", min = "1929-10-29", max = "2002-01-02" })
+                @Html.ValidationMessageFor(m=>m.Date_of_birth)
+                <br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SelectedCity.CityName)
+                <br />
+                @Html.DropDownListFor(m => m.SelectedCity.Id,
+                Model.Cities.Select(t => new SelectListItem { Value = t.Id.ToString(), Text = t.CityName }),
+                "select city", new { @class = "form-control" })
+                <br />
+            </div>
+            <input type="submit" value="submit" class="btn btn-success" />
+        }
+    </div>
+</body>
+</html>
+

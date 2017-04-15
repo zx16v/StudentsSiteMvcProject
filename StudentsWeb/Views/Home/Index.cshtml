@@ -1,0 +1,38 @@
+﻿@model  IEnumerable<ShimiTest.GetAllStudents_Result>
+@{
+    Layout = null;
+}
+<!DOCKTYPE html>        
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Scripts.Render("~/bundles/mybundle")
+    @Styles.Render("~/Content/css")
+   
+</head>
+
+<body>
+
+    <div class ="bodyStyle">
+        @Html.ActionLink("Add", "Add", "Home", null, new { @class = "btn btn-primary" })
+    <div id="StudentDiv">
+     @Html.Partial("_studentsGrid", Model)
+   </div>
+   
+    </div>
+
+    <div style="margin-left:20px;">
+   @using (Ajax.BeginForm(new AjaxOptions { HttpMethod="POST", InsertionMode = InsertionMode.Replace, UpdateTargetId="StudentDiv"}))
+        {
+            <input type="hidden" id="CurrentPage" name="CurrentPage" value="@ViewBag.CurrentPage" />
+            <input type="hidden" id="LastPage" name="LastPage" value="@ViewBag.LastPage" />
+        }
+       
+        <input class="btn btn-primary" hidden  type="button" id="Previous" value="Previous" />
+        <input class="btn btn-primary" type="button" id="Next" value="Next" />
+  
+      </div>
+</body>
+</html>
+

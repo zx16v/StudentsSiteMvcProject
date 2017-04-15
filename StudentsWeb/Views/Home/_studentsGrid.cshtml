@@ -1,0 +1,52 @@
+﻿@model  IEnumerable<ShimiTest.GetAllStudents_Result>
+
+   <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Israeli_ID_</th>
+                <th>Date_of_birth</th>
+                <th>First_name_</th>
+                <th>Last_name_</th>
+                <th>CityName</th>
+                <th>Description_</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ShimiTest.GetAllStudents_Result item in Model)
+            {
+                <tr>
+                    <td>@item.Israeli_ID_</td>
+                    <td>@item.Date_of_birth.ToShortDateString()</td>
+                    <td>@item.First_name_</td>
+                    <td>@item.Last_name_</td>
+                    <td>@item.CityName</td>
+                    <td>@item.Description_</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Home", new { id = item.ID }, new { @class = "btn btn-default" })
+                </td>
+                <td>
+                        @Ajax.ActionLink("Delete", "DeleteAJAX", "Home", new { studentid = item.ID },
+                         new AjaxOptions
+                         {
+                             Confirm = "Are you sure you wish to delete the student " +
+                             @item.First_name_ + " " + @item.Last_name_ + "?",
+                             UpdateTargetId = "StudentDiv",
+                             HttpMethod = "POST",
+                             InsertionMode = InsertionMode.Replace,
+                             OnSuccess = "UpdateCounter()",
+                         },
+                         new { @class = "btn btn-default" })
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+<input type="hidden" id="lastPage" data-Value="@ViewBag.LastPage" />
+
+
+
+ 
+

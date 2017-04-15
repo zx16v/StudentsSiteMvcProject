@@ -1,0 +1,109 @@
+﻿@model  ShimiTest.Student
+@{
+    Layout = null;
+}
+<script src="~/Scripts/jquery-3.1.1.js">   </script>
+<script src="~/Scripts/jquery-ui-1.12.0.js">  </script>
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet"/>
+<script type="text/javascript">
+
+ $(document).ready(function () {
+        $("#CitesNames").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Url.Action("GetCities")",
+                    type: "POST",
+                    dataType: "json",
+                    cache: false,
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                        return { label: item.CityName, value: item.CityName, id:item.Id };
+                        }))
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("error handler!");
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            },
+
+            select: function (event, ui) {
+            // Set autocomplete element to display the label
+               this.value = ui.item.label;
+            // Store value in hidden field
+              $("#CityId_hidden").val(ui.item.id);
+              $("#CityIdhidden").val(ui.item.id);
+              return false;
+            }
+        });
+
+    })
+
+</script>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    <div style="margin-left:20px;margin-top:50px; width:300px">
+    @Html.ActionLink("Back to grid", "Index", null, new { @class = "btn btn-primary" })
+    <br /><br />
+    @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.ID)
+              <br />
+                @Html.TextBoxFor(m => m.ID, new { @class = "form-control", @readonly = "true" })
+             <br />
+            </div>
+
+             <div class="form-group">
+                @Html.LabelFor(m => m.City.CityName)
+                <br />
+                @Html.TextBoxFor(m => m.City.CityName, new { @class = "form-control", id = "CitesNames" })
+                <br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.First_name_)
+                <br />
+                @Html.TextBoxFor(m => m.First_name_, new { @class = "form-control" })
+                <br />
+            </div>
+            @Html.TextBoxFor(m => m.Israeli_ID_, new { style = "display: none;" })
+            @Html.TextBoxFor(m => m.City.Id, new { style = "display: none;", @class = "pageFont", id = "CityIdhidden" })
+            @Html.TextBoxFor(m => m.CityId, new { style = "display: none;", @class = "pageFont", id = "CityId_hidden" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Last_name_)
+                <br />
+                @Html.TextBoxFor(m => m.Last_name_, new { @class = "form-control" })
+                <br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Date_of_birth)
+                <br />
+                @Html.TextBoxFor(m => m.Date_of_birth, "{0:dd-MM-yyyy}", new { @class = "form -control", @readonly = "true" } )
+                @Html.Label("Pick another date of birth")
+                @Html.TextBoxFor(m => m.Date_of_birth, new { @class = "form-control", type = "date", min = "1929-10-29", max = "2002-01-02" })
+                @Html.ValidationMessageFor(m => m.Date_of_birth)
+                <br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description_)
+                <br />
+                @Html.TextBoxFor(m => m.Description_, new { @class = "form-control" })
+                <br />
+            </div>
+            <input type="submit" value="submit" class="btn btn-success" />
+        }
+    </div>
+</body>
+</html>
