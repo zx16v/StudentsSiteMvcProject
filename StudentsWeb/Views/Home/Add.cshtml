@@ -47,7 +47,8 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Date_of_birth)
                 <br />
-                @Html.TextBoxFor(m => m.Date_of_birth, new { @class = "form-control", type = "date", min = "1929-10-29", max = "2002-01-02" })
+                @Html.TextBoxFor(m => m.Date_of_birth,
+                new { @class = "form-control", type = "date", min = "1929-10-29", max = "2002-01-02" })
                 @Html.ValidationMessageFor(m=>m.Date_of_birth)
                 <br />
             </div>

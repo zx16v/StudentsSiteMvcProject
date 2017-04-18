@@ -43,13 +43,10 @@ namespace ShimiTest
         [HttpPost]
         public JsonResult GetCities(string term)
         {
-            logic.DB.Configuration.ProxyCreationEnabled = false;
+           logic.DB.Configuration.ProxyCreationEnabled = false;
             List<City> cities = null;
             cities = logic.DB.Cities.Where(x => x.CityName.StartsWith(term)).ToList();
-            JsonResult test = Json(cities, JsonRequestBehavior.AllowGet);
             return Json(cities, JsonRequestBehavior.AllowGet);
-
-
         }
 
         [HttpPost]

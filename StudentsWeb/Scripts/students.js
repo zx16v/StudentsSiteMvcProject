@@ -45,19 +45,28 @@ $(document).ready(function () {
     $("#CitesNames").autocomplete({
         source: function (request, response) {
             $.ajax({
+                minLength: 2,
                 url: "/Home/GetCities",
                 type: "POST",
             dataType: "json",
             cache: false,
             data: { term: request.term },
             success: function (data) {
-                response($.map(data, function (item) {
-                    return { label: item.CityName, value: item.CityName, id:item.Id };
-                }))
+                if (data.length == 0) {
+                    alert("please enter valid city name using autocomplete");
+                    $("#CitesNames").val("");
+                }
+                else {
+                    response($.map(data, function (item) {
+                        return { label: item.CityName, value: item.CityName, id: item.Id };
+
+                    }))
+                }
             },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("error handler!");
-            }
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            },
         })
 },
     messages: {
